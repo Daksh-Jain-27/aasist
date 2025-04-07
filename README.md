@@ -1,3 +1,41 @@
+## Setup Instructions
+
+1. Clone the repo:
+   
+         git clone https://github.com/yourusername/aasist-audio-deepfake.git
+
+2. Install dependencies:
+   
+         pip install -r requirements.txt
+
+    Our environment (for GPU training):
+      - Based on a docker image: pytorch:1.6.0-cuda10.1-cudnn7-runtime   
+      - GPU: 1 NVIDIA Tesla V100   
+           - About 16GB is required to train AASIST using a batch size of 24
+      - gpu-driver: 418.67
+
+4. Data preparation:
+   - ASVspoof2019 dataset: https://datashare.ed.ac.uk/handle/10283/3336
+   
+      - Download LA.zip and unzip it
+      - Set your dataset directory in the configuration file
+
+5. Training:
+   - To train AASIST:
+     
+           python main.py --config ./config/AASIST.conf
+   - To train AASIST-L:
+     
+           python main.py --config ./config/AASIST-L.conf
+
+6. Pre-trained models:
+   - To evaluate AASIST:
+     
+           python main.py --eval --config ./config/AASIST.conf
+   - To evaluate AASIST-L:
+     
+           python main.py --eval --config ./config/AASIST-L.conf
+
 # **Part 1: Research & Selection**
 
 I found the following three promising forgery detection models that fit the criteria: 
@@ -84,6 +122,10 @@ I found the following three promising forgery detection models that fit the crit
    The Dual-Branch Network, on the other hand, combines LFCC and CQT features to achieve extremely low error rates, but it also adds more computational complexity, which may limit its real-time potential.
       
    Using additive attention mechanisms, AASIST successfully combines spectro-temporal features, resulting in a low Equal Error Rate that is still easier to optimize for near real-time scenarios. 
+
+   **I have used the existing code of AASIST.**
+
+   **Since I don't have time to do training of models, so I reduced the number of epochs to 1 and batch size to 4.**
 
 
 # **Part 3: Documentation & Analysis**
