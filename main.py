@@ -1,3 +1,4 @@
+# %%
 """
 Main script that trains, validates, and evaluates
 various models including AASIST.
@@ -21,7 +22,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from torchcontrib.optim import SWA
-
+# %%
 from data_utils import (Dataset_ASVspoof2019_train,
                         Dataset_ASVspoof2019_devNeval, genSpoof_list)
 from evaluation import calculate_tDCF_EER
@@ -29,7 +30,7 @@ from utils import create_optimizer, seed_worker, set_seed, str_to_bool
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-
+# %%
 def main(args: argparse.Namespace) -> None:
     """
     Main function.
@@ -208,7 +209,7 @@ def main(args: argparse.Namespace) -> None:
     print("Exp FIN. EER: {:.3f}, min t-DCF: {:.5f}".format(
         best_eval_eer, best_eval_tdcf))
 
-
+# %%
 def get_model(model_config: Dict, device: torch.device):
     """Define DNN model architecture"""
     module = import_module("models.{}".format(model_config["architecture"]))
@@ -219,7 +220,7 @@ def get_model(model_config: Dict, device: torch.device):
 
     return model
 
-
+# %%
 def get_loader(
         database_path: str,
         seed: int,
@@ -287,7 +288,7 @@ def get_loader(
 
     return trn_loader, dev_loader, eval_loader
 
-
+# %%
 def produce_evaluation_file(
     data_loader: DataLoader,
     model,
@@ -317,7 +318,7 @@ def produce_evaluation_file(
             fh.write("{} {} {} {}\n".format(utt_id, src, key, sco))
     print("Scores saved to {}".format(save_path))
 
-
+# %%
 def train_epoch(
     trn_loader: DataLoader,
     model,
@@ -357,7 +358,7 @@ def train_epoch(
     running_loss /= num_total
     return running_loss
 
-
+# %%
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="ASVspoof detection system")
     parser.add_argument("--config",
@@ -389,3 +390,5 @@ if __name__ == "__main__":
                         default=None,
                         help="directory to the model weight file (can be also given in the config file)")
     main(parser.parse_args())
+
+
